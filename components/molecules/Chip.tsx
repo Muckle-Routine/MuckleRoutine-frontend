@@ -7,7 +7,7 @@ type Props = {
 const Chip = ({ text, selected, onSelect }: Props) => {
     return (
         <button
-            className={`rounded-2xl py-1 px-4 mx-1 inline-block max-h-8 min-w-max ${
+            className={`rounded-2xl py-1 px-4 mx-1 flex items-center max-h-8 min-w-max ${
                 selected ? 'bg-primary' : 'border border-deactive'
             }`}
             onClick={() => onSelect(text)}
