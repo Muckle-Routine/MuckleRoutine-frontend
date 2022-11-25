@@ -11,6 +11,8 @@ import useInput from 'hooks/useInput';
 import { MOCK_CATEGORIES, MOCK_CYCLES } from '../mock';
 import { useRouter } from 'next/router';
 import ImageLoader from '@/components/organisms/ImageLoader';
+import CustomToast from '@/components/molecules/CustomToast';
+import { toast } from 'react-hot-toast';
 
 const AddRoutine: NextPageWithLayout = () => {
     const router = useRouter();
@@ -23,6 +25,7 @@ const AddRoutine: NextPageWithLayout = () => {
 
     const handleCreateRoutine = () => {
         router.push('/');
+        toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
     };
 
     const handleUpdateDeposite = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +38,7 @@ const AddRoutine: NextPageWithLayout = () => {
             <div className="px-6 pt-[66px] pb-[100px] h-full">
                 <div className="mt-3">
                     <InputBox placeholder="제목을 입력해주세요." value={routineTitle} onChange={updateRoutineTitle} />
-                    <div className="flex flex-row justify-between mt-6">
+                    <div className="flex flex-row justify-between mt-6 h-10">
                         <InputBox placeholder="시작일" value={startDate} onChange={updateStartDate} type="date" />
                         <InputBox
                             placeholder="종료일"

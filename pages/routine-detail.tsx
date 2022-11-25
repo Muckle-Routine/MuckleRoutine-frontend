@@ -8,6 +8,8 @@ import PageHeader from '@/components/organisms/PageHeader';
 import Section from '@/components/organisms/Section';
 import ExampleBadge from '@/components/molecules/ExampleBadge';
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
+import CustomToast from '@/components/molecules/CustomToast';
 
 const RoutineDetail: NextPageWithLayout = () => {
     const router = useRouter();
@@ -25,11 +27,12 @@ const RoutineDetail: NextPageWithLayout = () => {
 
     const handleParticipate = () => {
         router.push('/');
+        toast.custom((t) => <CustomToast toast={t} text={'미션 참여 완료했어요!'} />);
     };
 
     return (
         <div>
-            <PageHeader canGoBack title="루틴 상세" rightIconSrc="/ic-share.png" />
+            <PageHeader canGoBack title="루틴 상세" rightIconSrc="/ic-share.svg" />
             <div className="px-6 pt-[66px] pb-[100px]">
                 <h1 className="text-white font-semibold text-4xl text-[32px] mt-3">
                     아침 6시 30분 전
@@ -37,7 +40,7 @@ const RoutineDetail: NextPageWithLayout = () => {
                     기상하기
                 </h1>
                 <div className="flex flex-row items-center -ml-1 mt-6">
-                    <Badge text={`${data.week}주`} style="bg-[#3A3D46]" />
+                    <Badge text={`${data.week}주`} style="bg-deactiveDarker" />
                     <Badge text={data.category} />
                 </div>
                 <Section title={'루틴 기간'} style="mt-6">
