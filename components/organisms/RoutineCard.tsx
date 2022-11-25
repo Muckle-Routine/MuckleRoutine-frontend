@@ -33,7 +33,7 @@ const RoutineCard = ({ data }: Props) => {
                     <span className="text-base text-white font-bold mt-1 mb-2">{data.title}</span>
                     <div className="flex flex-row justify-between items-center w-full">
                         <div className="flex flex-row items-center -ml-1">
-                            <Badge text={`${data.week}주`} style="bg-deactiveDarker" />
+                            <Badge text={`${data.week}주`} style="bg-[#3A3D46]" />
                             <Badge text={data.category} />
                             <Badge text={`${data.participantsCount}명`} />
                         </div>

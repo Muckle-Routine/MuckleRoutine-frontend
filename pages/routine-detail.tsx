@@ -37,7 +37,7 @@ const RoutineDetail: NextPageWithLayout = () => {
                     기상하기
                 </h1>
                 <div className="flex flex-row items-center -ml-1 mt-6">
-                    <Badge text={`${data.week}주`} style="bg-deactiveDarker" />
+                    <Badge text={`${data.week}주`} style="bg-[#3A3D46]" />
                     <Badge text={data.category} />
                 </div>
                 <Section title={'루틴 기간'} style="mt-6">
