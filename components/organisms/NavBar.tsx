@@ -16,22 +16,29 @@ const NavBar = () => {
             <NavButton
                 tag="home"
                 focused={currentTag === 'home'}
-                activeIcon={'/ic-home-active.png'}
-                inactiveIcon={'/ic-home-inactive.png'}
+                activeIcon={'/ic-home-active.svg'}
+                inactiveIcon={'/ic-home-inactive.svg'}
                 onClick={handlePressNavigationButton}
             />
             <NavButton
                 tag="certification-main"
                 focused={currentTag === 'certification-main'}
-                activeIcon={'/ic-cert-active.png'}
-                inactiveIcon={'/ic-cert-inactive.png'}
+                activeIcon={'/ic-validation-active.svg'}
+                inactiveIcon={'/ic-validation-inactive.svg'}
+                onClick={handlePressNavigationButton}
+            />
+            <NavButton
+                tag="certification-main"
+                focused={currentTag === 'certification-main'}
+                activeIcon={'/ic-certification-active.svg'}
+                inactiveIcon={'/ic-certification-inactive.svg'}
                 onClick={handlePressNavigationButton}
             />
             <NavButton
                 tag="my"
                 focused={currentTag === 'my'}
-                activeIcon={'/ic-my-active.png'}
-                inactiveIcon={'/ic-my-inactive.png'}
+                activeIcon={'/ic-my-active.svg'}
+                inactiveIcon={'/ic-my-inactive.svg'}
                 onClick={handlePressNavigationButton}
             />
         </div>
