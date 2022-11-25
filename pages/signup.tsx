@@ -25,7 +25,7 @@ const SignUp: NextPageWithLayout = () => {
                 className="rounded-lg border-2 border-white/10 w-[30.67px] h-[30.67px]  flex items-center justify-center"
                 onClick={handleGoback}
             >
-                <img src={'/ic-arrow-left.png'} alt="ic-go-back" className="w-3 h-3" />
+                <img src={'/ic-arrow-left.svg'} alt="ic-go-back" className="w-3 h-3" />
             </button>
             <div className="min-h-screen pt-[34px] pb-2 flex-col flex justify-between">
                 <div className="flex-col flex mx-4">

@@ -17,7 +17,7 @@ const PageHeader = ({ canGoBack, title, rightIconSrc, onClickRight }: Props) => 
                     className="rounded-lg border-2 border-white/10 w-[30.67px] h-[30.67px] flex items-center justify-center"
                     onClick={() => router.back()}
                 >
-                    <img src={'/ic-arrow-left.png'} alt="ic-go-back" className="w-3 h-3" />
+                    <img src={'/ic-arrow-left.svg'} alt="ic-go-back" />
                 </button>
             )}
             <h2 className="text-base text-[18px] font-semibold text-white">{title}</h2>

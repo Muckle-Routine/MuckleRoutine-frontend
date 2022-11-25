@@ -42,7 +42,7 @@ const ImageLoader = ({ isGoodExample, style }: Props) => {
                     <img className="aspect-square w-full rounded-xl" src={imageSrc} alt="example-image" />
                 ) : (
                     <button className="cursor-pointer" onClick={handleLoadImage}>
-                        <img src="/ic-image.png" className="w-6 h-6" />
+                        <img src="/ic-image.svg" />
                     </button>
                 )}
             </div>

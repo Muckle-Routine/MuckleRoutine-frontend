@@ -12,7 +12,7 @@ const ExampleBadge = ({ positive, style }: Props) => {
                 }`}
             >
                 <img
-                    src={positive ? '/ic-check.png' : '/ic-close.png'}
+                    src={positive ? '/ic-check.svg' : '/ic-close.svg'}
                     alt="example-sign-icon"
                     className="w-[9.5px] h-[9.5px]"
                 />

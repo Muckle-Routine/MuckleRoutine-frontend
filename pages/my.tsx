@@ -19,8 +19,8 @@ const My = () => {
                     </div>
                 </Section>
                 <Section title={'설정'} style="mt-10">
-                    <IconTextButton iconSrc={'/ic-wallet.png'} text={'내 지갑 설정'} />
-                    <IconTextButton iconSrc={'/ic-settings.png'} text={'개인정보 설정'} style="mt-3" />
+                    <IconTextButton iconSrc={'/ic-wallet.svg'} text={'내 지갑 설정'} />
+                    <IconTextButton iconSrc={'/ic-setting.svg'} text={'개인정보 설정'} style="mt-3" />
                 </Section>
             </div>
         </div>

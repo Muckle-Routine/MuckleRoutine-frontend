@@ -26,7 +26,7 @@ const InputBox = ({ placeholder, value, onChange, type = 'text', style }: Props)
             />
             {false && (
                 <button className=" justify-center items-center flex p-2" onClick={handleClearInput}>
-                    <img src="/ic-close.png" alt="icon-add" className="w-4 h-4" />
+                    <img src="/ic-close.svg" alt="icon-add" />
                 </button>
             )}
         </div>
