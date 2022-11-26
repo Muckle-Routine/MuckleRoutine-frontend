@@ -7,17 +7,19 @@ import RoutineCard from '@/components/organisms/RoutineCard';
 import NavLayout from '@/components/organisms/NavLayout';
 import { MOCK_CATEGORIES, MOCK_ROUTINES } from '../mock';
 import { useKlip } from 'klip/hooks';
+import { useRouter } from 'next/router';
 
 const Home: NextPageWithLayout = () => {
+    const router = useRouter();
     const [selectedCategory, setSelectedCategory] = useState<string>(MOCK_CATEGORIES[0]);
-    const [prepare, request, result, login] = useKlip();
+    const [result, login] = useKlip();
 
     const handleSignIn = () => {
         login();
     };
 
     return (
-        <div className="">
+        <div>
             <HomeHeader onPressWallet={handleSignIn} />
             <div className="px-6 pb-14">
                 <h1 className="text-white text-4xl text-[32px] font-semibold mt-[10px] mb-6">
@@ -41,7 +43,12 @@ const Home: NextPageWithLayout = () => {
                     {MOCK_ROUTINES.map((routine) => {
                         return (
                             (selectedCategory === MOCK_CATEGORIES[0] || selectedCategory === routine.category) && (
-                                <RoutineCard data={routine} key={routine.routinId} />
+                                <RoutineCard
+                                    data={routine}
+                                    key={routine.routinId}
+                                    type="klay-visible"
+                                    onPress={() => router.push(`/routine-detail/${routine.routinId}`)}
+                                />
                             )
                         );
                     })}
