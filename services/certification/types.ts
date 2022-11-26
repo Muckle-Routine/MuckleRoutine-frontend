@@ -1,21 +1,10 @@
-import { RoutineStatus } from '../types';
-
-export type GetCertificationResult = {
-    routine_no: number;
-    certification_url: string;
-    certification_date: Date;
-    next_certification_Date: Date;
-    status: RoutineStatus;
+export type VoteBody = {
+    certificationNo: number;
+    status: 'SUCCESS' | 'FAIL';
+    message: string;
 };
 
-export type UpdateCertificationBody = {
-    certification: FormData;
-};
-
-export type UpdateCertificationParams = {
-    certification_no: number;
-} & UpdateCertificationBody;
-
-export type UpdateCertificationResult = {
-    certification_no: number;
+export type UploadCertificationBody = {
+    routine_id: number;
+    image: string;
 };

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { CommonResponse } from '../types';
-import { GetCertificationResult, UpdateCertificationParams, UpdateCertificationResult } from './types';
+import { UploadCertificationBody, VoteBody } from './types';
 import baseClient from '../client';
 
 class CertificationApi {
@@ -10,40 +10,37 @@ class CertificationApi {
         this.client = axiosClient;
     }
 
-    async uploadCertification() {
-        const response = await this.client.request<CommonResponse<void>>({
-            method: 'POST',
-            url: '/certification/upload',
-            // data:
-        });
-    }
-
-    async getCertification(certification_no: number): Promise<GetCertificationResult> {
-        const respones = await this.client.request<CommonResponse<GetCertificationResult>>({
+    async getCertificationForVote(): Promise<any> {
+        const respones = await this.client.request<CommonResponse<any>>({
             method: 'GET',
-            url: `/certification/${certification_no}`,
+            url: '/certification/get/',
         });
         return respones.data.result;
     }
 
-    async updateCertification({
-        certification_no,
-        certification,
-    }: UpdateCertificationParams): Promise<UpdateCertificationResult> {
-        const response = await this.client.request<CommonResponse<UpdateCertificationResult>>({
-            method: 'PUT',
-            url: `/certification/update/${certification_no}`,
-            data: certification,
+    async getLastCertification(routine_id: number): Promise<any> {
+        const respones = await this.client.request<CommonResponse<any>>({
+            method: 'GET',
+            url: `/certification/get/${routine_id}`,
         });
-        return response.data.result;
+        return respones.data.result;
     }
 
-    async deleteCertification(certification_no: number): Promise<boolean> {
+    async vote({ certificationNo, status, message }: VoteBody): Promise<boolean> {
         const response = await this.client.request<CommonResponse<void>>({
-            method: 'DELETE',
-            url: `/certification/${certification_no}`,
+            method: 'POST',
+            url: `/certification/vote/${certificationNo}?status=${status}&message=${message}`,
         });
         return response.data.status === 'success';
+    }
+
+    async uploadCertification(data: UploadCertificationBody) {
+        const response = await this.client.request<CommonResponse<any>>({
+            method: 'POST',
+            url: ``,
+            data,
+        });
+        return response.data.result;
     }
 }
 
