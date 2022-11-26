@@ -28,14 +28,16 @@ const CertificationMain: NextPageWithLayout = () => {
                     </span>
                 </div>
                 <div className="mt-6 -ml-6 overflow-y-scroll">
-                    {MOCK_ROUTINES.map((routine) => {
+                    {MOCK_ROUTINES.map((routine, index) => {
                         return (
-                            <RoutineCard
-                                data={routine}
-                                key={routine.routinId}
-                                type="certification"
-                                onPress={() => router.push(`/certification-validation/${routine.routinId}`)}
-                            />
+                            index < 2 && (
+                                <RoutineCard
+                                    data={routine}
+                                    key={routine.routinId}
+                                    type="certification"
+                                    onPress={() => router.push(`/certification-validation/${routine.routinId}`)}
+                                />
+                            )
                         );
                     })}
                 </div>
