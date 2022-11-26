@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { NextPageWithLayout } from './_app';
 import Button from '@/components/molecules/Button';
 import Layout from '@/components/organisms/Layout';
@@ -10,27 +10,66 @@ import InputBox from '@/components/molecules/InputBox';
 import useInput from 'hooks/useInput';
 import { MOCK_CATEGORIES, MOCK_CYCLES } from '../mock';
 import { useRouter } from 'next/router';
-import ImageLoader from '@/components/organisms/ImageLoader';
+import ExampleImageLoader from '@/components/organisms/ExampleImageLoader';
 import CustomToast from '@/components/molecules/CustomToast';
 import { toast } from 'react-hot-toast';
+import { useKlip } from '@/klip/hooks';
+import { Transaction } from '@/klip/types';
+import { MERKLE_ROUTINE_ABI } from '@/klip/abi';
+import { useMutation } from '@tanstack/react-query';
+import { routineApi } from '@/services/routine/api';
+import { Routine } from '@/services/routine/types';
 
 const AddRoutine: NextPageWithLayout = () => {
     const router = useRouter();
     const [selectedCategory, setSelectedCategory] = useState<string>(MOCK_CATEGORIES[0]);
     const [selectedCycle, setSelectedCycle] = useState<string>(MOCK_CYCLES[0]);
     const [routineTitle, updateRoutineTitle] = useInput('', 30);
+    const [description, updateDescription] = useInput('', 200);
     const [startDate, updateStartDate] = useInput('');
     const [endDate, updateEndDate] = useInput('');
     const [deposit, updateDeposite] = useInput('', 10);
+    const [result, _, executeContract] = useKlip();
+    const mutation = useMutation({
+        mutationFn: (data: Routine) => routineApi.addRoutine(data),
+    });
 
     const handleCreateRoutine = () => {
-        router.push('/');
-        toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
+        const transaction: Transaction = {
+            to: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '',
+            value: '1',
+            abi: JSON.stringify(MERKLE_ROUTINE_ABI.createRoutine),
+            params: JSON.stringify([1]),
+        };
+        executeContract(transaction);
     };
 
     const handleUpdateDeposite = (event: React.ChangeEvent<HTMLInputElement>) => {
         updateDeposite(event.target.value);
     };
+
+    useEffect(() => {
+        if (result) {
+            mutation
+                .mutateAsync({
+                    tilte: routineTitle,
+                    startDate: '2022-11-26',
+                    endDate: '2022-12-03',
+                    category: selectedCategory,
+                    term: 'EVERY_DAY',
+                    skeleton: 1,
+                    description,
+                    no: 1,
+                    fee: 1,
+                    image1: '',
+                    image2: '',
+                })
+                .then(() => {
+                    router.push('/');
+                    toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
+                });
+        }
+    }, [result, router, mutation, routineTitle, startDate, endDate, selectedCategory, description]);
 
     return (
         <div>
@@ -82,12 +121,14 @@ const AddRoutine: NextPageWithLayout = () => {
                         <textarea
                             placeholder="인증 기준을 설명해주세요"
                             className="focus:outline-none bg-transparent min-h-[120px] min-w-full text-white"
+                            value={description}
+                            onChange={(event) => updateDescription(event.target.value)}
                         />
                     </div>
                 </Section>
                 <div className="flex flex-row mt-3">
-                    <ImageLoader isGoodExample />
-                    <ImageLoader isGoodExample={false} style="ml-3" />
+                    <ExampleImageLoader isGoodExample />
+                    <ExampleImageLoader isGoodExample={false} style="ml-3" />
                 </div>
             </div>
             <BottomFixedContainer style="px-6 pb-3">
