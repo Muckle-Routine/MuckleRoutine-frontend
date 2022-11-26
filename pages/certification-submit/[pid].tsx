@@ -7,14 +7,16 @@ import Section from '@/components/organisms/Section';
 import PageHeader from '@/components/organisms/PageHeader';
 import { useRouter } from 'next/router';
 import ImageLoader from '@/components/organisms/ImageLoader';
+import CustomToast from '@/components/molecules/CustomToast';
+import toast from 'react-hot-toast';
 
 const CertificationSubmit: NextPageWithLayout = () => {
     const router = useRouter();
-    const { pid } = router.query;
+    const { pid } = router.query; //routine id
 
     const handleSubmit = () => {
-        router.push(`certification/${pid}`);
-        // toast.custom((t) => <CustomToast toast={t} text={'인증제출이 완료되었어요!'} />);
+        router.push(`/submit-done`);
+        toast.custom((t) => <CustomToast toast={t} text={'인증제출이 완료되었어요!'} />);
     };
 
     return (
