@@ -1,6 +1,6 @@
 export type CommonResponse<ResultType> = {
     status: 'success' | string;
-    msg: string;
+    message: string;
     result: ResultType;
 };
 
