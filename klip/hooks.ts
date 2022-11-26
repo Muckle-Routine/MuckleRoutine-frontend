@@ -1,63 +1,65 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getDeeplinkUrl } from 'utils/device';
 import { klipApi } from './api';
-import { PrepareType } from './types';
+import { Result, Transaction } from './types';
+import { authApi } from '@/services/auth/api';
 
 type Step = 'not-defined' | 'prepared' | 'result-resolved';
-type ReturnType = [(type: PrepareType) => Promise<string | undefined>, () => void, () => void, () => void];
+type ReturnType = [Result | undefined, () => void, (transaction: Transaction) => void];
 
 export const useKlip = (): ReturnType => {
     const router = useRouter();
     const deeplinkUrl = useRef<string>('');
     const step = useRef<Step>('not-defined');
-    const requestKey = useRef<string>('');
+    const [result, setResult] = useState<Result | undefined>(undefined);
 
-    const handlePrepare = useCallback(async (type: PrepareType): Promise<string | undefined> => {
-        const prepareResult = await klipApi.prepare(type);
-        if (prepareResult) {
-            deeplinkUrl.current = getDeeplinkUrl(prepareResult.request_key);
-            requestKey.current = prepareResult.request_key;
-            return prepareResult.request_key;
-        }
-    }, []);
-
-    const handleRequest = useCallback(() => {
-        if (deeplinkUrl.current) {
+    const handleRequest = useCallback(
+        (request_key: string) => {
+            deeplinkUrl.current = getDeeplinkUrl(request_key);
             router.push(deeplinkUrl.current);
             step.current = 'prepared';
-        }
-    }, [router]);
+        },
+        [router],
+    );
 
-    const handleResult = useCallback(async () => {
-        const result = await klipApi.result(requestKey.current);
+    const handleResult = useCallback(async (request_key: string) => {
+        const result = await klipApi.result(request_key);
         if (result.data.status === 'completed') {
+            if (result.data.result?.status) {
+                setResult(result.data.result);
+            } else {
+                authApi.getAccessToken(result.data.request_key);
+            }
             step.current = 'result-resolved';
         } else if (result.data.status === 'prepared') {
             step.current = 'prepared';
+            setTimeout(() => {
+                handleResult(result.data.request_key);
+            }, 2000);
         } else {
             step.current = 'not-defined';
         }
     }, []);
 
     const handleLogin = useCallback(async () => {
-        const request_key = await handlePrepare('auth');
+        const request_key = await authApi.getRequestKey();
         if (request_key) {
-            handleRequest();
-            handleResult();
+            handleRequest(request_key);
+            handleResult(request_key);
         }
-    }, [handlePrepare, handleRequest, handleResult]);
+    }, [handleRequest, handleResult]);
 
-    useEffect(() => {
-        const id = setInterval(() => {
-            if (step.current === 'prepared') {
-                handleResult();
+    const handleExecuteContract = useCallback(
+        async (transaction: Transaction) => {
+            const prepareResult = await klipApi.prepare('execute_contract', transaction);
+            if (prepareResult) {
+                handleRequest(prepareResult.request_key);
+                handleResult(prepareResult.request_key);
             }
-        }, 1000);
-        return () => {
-            clearInterval(id);
-        };
-    }, [handleResult]);
+        },
+        [handleRequest, handleResult],
+    );
 
-    return [handlePrepare, handleRequest, handleResult, handleLogin];
+    return [result, handleLogin, handleExecuteContract];
 };

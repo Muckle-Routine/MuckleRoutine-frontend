@@ -3,12 +3,9 @@ export type Status = 'prepared' | 'requested' | 'completed' | 'canceled' | 'erro
 export type Transaction = {
     from?: string;
     to: string;
-    amount: string;
-    value?: string;
-    contract: string;
+    value: string;
     abi?: string;
     params?: string;
-    card_id?: string;
     encoded_function_call?: string;
 };
 
@@ -44,11 +41,12 @@ export type ResultResponse = {
     request_key: string;
     status: Status;
     expiration_time: number;
-    signature?: string; // for sign message
-    hash?: string; // for sign message
-    result?: {
-        //
-        tx_hash: string;
-        status: 'success' | 'fail' | 'pending';
-    };
+    result?: Result;
+};
+
+export type Result = {
+    tx_hash: string;
+    status: 'success' | 'fail' | 'pending';
+    // signature?: string; // for sign message
+    // hash?: string; // for sign message
 };
