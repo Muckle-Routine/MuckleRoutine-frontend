@@ -4,7 +4,7 @@ import NavButton from '../molecules/NavButton';
 
 const NavBar = () => {
     const router = useRouter();
-    const [currentTag, setCurrentTag] = useState<string>('home');
+    const [currentTag, setCurrentTag] = useState<string>('/');
 
     const handlePressNavigationButton = (tag: string) => {
         router.push(`/${tag}`);
@@ -14,8 +14,8 @@ const NavBar = () => {
     return (
         <div className="border-t-[1px] border-t-white/30 max-w-md fixed bottom-0 w-full flex-row flex bg-background01 pb-3">
             <NavButton
-                tag="home"
-                focused={currentTag === 'home'}
+                tag="/"
+                focused={currentTag === '/'}
                 activeIcon={'/ic-home-active.svg'}
                 inactiveIcon={'/ic-home-inactive.svg'}
                 onClick={handlePressNavigationButton}
