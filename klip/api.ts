@@ -17,13 +17,10 @@ class KlipApi {
         const data: PrepareBody = {
             bapp: {
                 name: 'Merkle Routine',
-                callback:
-                    type === 'auth'
-                        ? {
-                              success: process.env.NEXT_PUBLIC_DOMAIN_URL || '',
-                              fail: process.env.NEXT_PUBLIC_DOMAIN_URL || '',
-                          }
-                        : undefined,
+                callback: {
+                    success: process.env.NEXT_PUBLIC_DOMAIN_URL || '',
+                    fail: process.env.NEXT_PUBLIC_DOMAIN_URL || '',
+                },
             },
             type,
             transaction,
