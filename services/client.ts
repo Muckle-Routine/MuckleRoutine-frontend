@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as AxiosLogger from 'axios-logger';
 
 const baseClient = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? process.env.BASE_URL : process.env.BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_MERKEL_SERVER_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -10,8 +10,8 @@ const baseClient = axios.create({
 
 baseClient.interceptors.request.use(
     (config) => {
-        if (config.url?.includes('/auth')) return config;
-        const accessToken = localStorage.getItem('token');
+        if (config.url?.includes('/auth') || config.url?.includes('/login')) return config;
+        const accessToken = localStorage.getItem('@token');
         return {
             ...config,
             headers: {
