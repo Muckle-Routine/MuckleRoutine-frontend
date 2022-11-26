@@ -1,58 +1,15 @@
-import { RoutineStatus } from '../types';
+type CertificationCycle = 'EVERY_DAY' | 'WEEKDAY' | 'WEEKEND' | 'ONCE' | 'TWICE' | 'THREE' | 'FOUR' | 'FIVE' | 'SIX';
 
-type Category = {
-    id: number;
-    name: string;
-};
-
-type CertificationCycle =
-    | 'every-day'
-    | 'every-weekday'
-    | 'every-weekend'
-    | 'once-a-week'
-    | 'twice-a-week'
-    | 'three-times-a-week'
-    | 'four-times-a-week'
-    | 'five-times-a-week'
-    | 'six-times-a-week';
-
-export type CreateRoutineBody = {
+export type Routine = {
+    no: number;
     tilte: string;
-    description: string;
-    category: Category;
-    certification_rules: string[];
-    certification_cycle: CertificationCycle;
+    description: string; // 인증 룰
+    category: string;
+    term: CertificationCycle;
     skeleton: number;
     fee: number;
-    start: string;
-    end: string;
-};
-
-export type SearchRoutinesBody = {
-    keyword: string;
-    start?: Date;
-    end?: Date;
-    status?: RoutineStatus;
-    fee?: number;
-};
-
-export type SearchRoutineResult = {
-    routine_no: number;
-    title: string;
-    description: string;
-    status: RoutineStatus;
-    certification_rules: string[];
-    certification_cycle: CertificationCycle;
-    skeleton: string;
-    fee: number;
-    start: Date;
-    end: Date;
-    create_date: Date;
-    maker: string; //creator_address
-    participants: string[];
-    contract_address: string;
-};
-
-export type UpdateRoutineResult = {
-    routine_no: number;
+    startDate: string;
+    endDate: string;
+    image1: string;
+    image2: string;
 };

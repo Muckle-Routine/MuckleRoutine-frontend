@@ -1,15 +1,39 @@
-import apiClient from '../client';
+import { AxiosInstance } from 'axios';
+import baseClient from '../client';
 import { CommonResponse } from '../types';
-import { UpdateRoutineResult } from './types';
+import { Routine } from './types';
 
-export async function updateRoutine(routine_no: number, certification_rules: string[]): Promise<number> {
-    const response = await apiClient.put<CommonResponse<UpdateRoutineResult>>(`/routine/update/${routine_no}`, {
-        certification_rules,
-    });
-    return response.data.result.routine_no;
+class RoutineAPi {
+    private readonly api: AxiosInstance;
+
+    constructor(axiosClient: AxiosInstance) {
+        this.api = axiosClient;
+    }
+
+    async addRoutine(data: Routine) {
+        const response = await this.api.request<CommonResponse<any>>({
+            method: 'POST',
+            url: '/routine/add',
+            data,
+        });
+        return response.data.result;
+    }
+
+    async fetchRoutines(category = '') {
+        const response = await this.api.request<CommonResponse<any>>({
+            method: 'GET',
+            url: '/routine/get',
+        });
+        return response.data.result;
+    }
+
+    async fetchRoutineDetail(routineId: number) {
+        const response = await this.api.request<CommonResponse<any>>({
+            method: 'GET',
+            url: `/routine/get/${routineId}`,
+        });
+        return response.data.result;
+    }
 }
 
-export async function deleteRoutine(routine_no: number): Promise<boolean> {
-    const response = await apiClient.delete<CommonResponse<void>>(`/routine/delete/${routine_no}`);
-    return response.data.status === 'success';
-}
+export const routineApi = new RoutineAPi(baseClient);
