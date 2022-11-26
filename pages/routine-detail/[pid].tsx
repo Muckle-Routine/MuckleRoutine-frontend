@@ -60,7 +60,7 @@ const RoutineDetail: NextPageWithLayout = () => {
                     <Badge text={mockData.category} />
                 </div>
                 <Section title={'루틴 기간'} style="mt-6">
-                    <span className="text-deactive text-sm text-[13px] font-medium">2022.11.04 - 2022.12.04</span>
+                    <span className="text-deactive text-sm text-[13px] font-medium">2022.11.27 - 2022.12.11</span>
                 </Section>
                 <Section title={'참가자 수'} style="mt-6">
                     <span className="text-deactive text-sm text-[13px] font-medium">{32}명 참여중</span>
@@ -76,20 +76,12 @@ const RoutineDetail: NextPageWithLayout = () => {
                 </Section>
                 <div className="flex flex-row">
                     <div className="relative">
-                        <img
-                            className="rounded-xl"
-                            src="https://i.picsum.photos/id/183/200/200.jpg?hmac=mfn5w11JTbXGqdQRlmRE-PRI5ZheVq8IKlC6Xt_0jto"
-                            alt="image-good-example"
-                        />
+                        <img className="rounded-xl" src="/img-example-success.png" alt="image-good-example" />
                         <ExampleBadge positive style="absolute top-2 left-2" />
                     </div>
                     <div className="w-3" />
                     <div className="relative">
-                        <img
-                            className="rounded-xl"
-                            src="https://i.picsum.photos/id/183/200/200.jpg?hmac=mfn5w11JTbXGqdQRlmRE-PRI5ZheVq8IKlC6Xt_0jto"
-                            alt="image-good-example"
-                        />
+                        <img className="rounded-xl" src="/img-example-fail.png" alt="image-good-example" />
                         <ExampleBadge positive={false} style="absolute top-2 left-2" />
                     </div>
                 </div>
