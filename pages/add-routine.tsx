@@ -50,24 +50,26 @@ const AddRoutine: NextPageWithLayout = () => {
 
     useEffect(() => {
         if (result) {
-            mutation
-                .mutateAsync({
-                    tilte: routineTitle,
-                    startDate: '2022-11-26',
-                    endDate: '2022-12-03',
-                    category: selectedCategory,
-                    term: 'EVERY_DAY',
-                    skeleton: 1,
-                    description,
-                    no: 1,
-                    fee: 1,
-                    image1: '',
-                    image2: '',
-                })
-                .then(() => {
-                    router.push('/');
-                    toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
-                });
+            // mutation
+            //     .mutateAsync({
+            //         tilte: routineTitle,
+            //         startDate: '2022-11-26',
+            //         endDate: '2022-12-03',
+            //         category: selectedCategory,
+            //         term: 'EVERY_DAY',
+            //         skeleton: 1,
+            //         description,
+            //         no: 1,
+            //         fee: 1,
+            //         image1: '',
+            //         image2: '',
+            //     })
+            //     .then(() => {
+            //         router.push('/');
+            //         toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
+            //     });
+            router.push('/');
+            toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
         }
     }, [result, router, mutation, routineTitle, startDate, endDate, selectedCategory, description]);
 
