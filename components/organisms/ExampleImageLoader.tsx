@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ExampleBadge from '../molecules/ExampleBadge';
 
 type Props = {
+    isGoodExample: boolean;
     style?: string;
 };
 
-const ImageLoader = ({ style }: Props) => {
+const ExampleImageLoader = ({ isGoodExample, style }: Props) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [imageSrc, setImageSrc] = useState<string>();
     const fileReader = useRef<FileReader>();
@@ -30,6 +32,11 @@ const ImageLoader = ({ style }: Props) => {
 
     return (
         <div className={`flex flex-row justify-around flex-1 rounded-xl ${style}`}>
+            {imageSrc && (
+                <div className="mr-3">
+                    <ExampleBadge positive={isGoodExample} />
+                </div>
+            )}
             <div className="aspect-square w-full flex justify-center items-center rounded-xl bg-background02">
                 {imageSrc ? (
                     <img className="aspect-square w-full rounded-xl" src={imageSrc} alt="example-image" />
@@ -44,4 +51,4 @@ const ImageLoader = ({ style }: Props) => {
     );
 };
 
-export default ImageLoader;
+export default ExampleImageLoader;
