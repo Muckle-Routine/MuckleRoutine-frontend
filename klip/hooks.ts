@@ -4,6 +4,8 @@ import { getDeeplinkUrl } from 'utils/device';
 import { klipApi } from './api';
 import { Result, Transaction } from './types';
 import { authApi } from '@/services/auth/api';
+import { TransactionReceipt } from 'caver-js';
+import { subscribeToTransactionResult } from './caver';
 
 type Step = 'not-defined' | 'prepared' | 'result-resolved';
 type ReturnType = [Result | undefined, () => void, (transaction: Transaction) => void];
@@ -28,6 +30,7 @@ export const useKlip = (): ReturnType => {
         if (result.data.status === 'completed') {
             if (result.data.result?.status) {
                 setResult(result.data.result);
+                subscribeToTransactionResult(result.data.result.tx_hash, bindTransactionResultCallback);
             } else {
                 authApi.getAccessToken(result.data.request_key);
             }
@@ -60,6 +63,13 @@ export const useKlip = (): ReturnType => {
         },
         [handleRequest, handleResult],
     );
+
+    const bindTransactionResultCallback = (error: Error, result: TransactionReceipt | null) => {
+        if (result?.logs) {
+            const data = result?.logs[0].data;
+        } else if (error) {
+        }
+    };
 
     return [result, handleLogin, handleExecuteContract];
 };
