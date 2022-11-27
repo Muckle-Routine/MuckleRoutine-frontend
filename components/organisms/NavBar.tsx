@@ -21,19 +21,19 @@ const NavBar = () => {
                 onClick={handlePressNavigationButton}
             />
             <NavButton
-                tag="certification-main"
-                focused={currentTag === 'certification-main'}
+                tag="random-validation"
+                focused={currentTag === 'random-validation'}
                 activeIcon={'/ic-validation-active.svg'}
                 inactiveIcon={'/ic-validation-inactive.svg'}
                 onClick={handlePressNavigationButton}
             />
-            {/* <NavButton
+            <NavButton
                 tag="certification-main"
                 focused={currentTag === 'certification-main'}
                 activeIcon={'/ic-certification-active.svg'}
                 inactiveIcon={'/ic-certification-inactive.svg'}
                 onClick={handlePressNavigationButton}
-            /> */}
+            />
             <NavButton
                 tag="my"
                 focused={currentTag === 'my'}

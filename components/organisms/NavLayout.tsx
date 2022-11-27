@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import NavBar from './NavBar';
+import BottomSheetProvider from '@/components/organisms/DimProvider';
 
 type Props = {
     children: ReactNode;
@@ -8,8 +9,10 @@ type Props = {
 const NavLayout = ({ children }: Props) => {
     return (
         <div className="flex flex-col justify-between">
-            {children}
-            <NavBar />
+            <BottomSheetProvider>
+                {children}
+                <NavBar />
+            </BottomSheetProvider>
         </div>
     );
 };

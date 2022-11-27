@@ -24,7 +24,7 @@ const SubmitDone: NextPageWithLayout = () => {
                 <img src="/img-congratulation.svg" />
             </div>
             <BottomFixedContainer style="px-6 pb-3 flex flex-row">
-                <Button onClick={() => router.push('/certification-main')}>
+                <Button onClick={() => router.push('/')}>
                     <span>인증탭으로 돌아가기</span>
                 </Button>
             </BottomFixedContainer>

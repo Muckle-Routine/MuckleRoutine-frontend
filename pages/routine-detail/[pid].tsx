@@ -23,7 +23,7 @@ const RoutineDetail: NextPageWithLayout = () => {
 
     const mockData = {
         routinId: 1,
-        title: '아침 6시 기상하기',
+        title: '아침 6시 30분 전 기상하기',
         startDate: '2022.11.04',
         thumbnail: '',
         week: 4,
@@ -37,24 +37,31 @@ const RoutineDetail: NextPageWithLayout = () => {
         const transaction: Transaction = {
             to: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '',
             value: '1',
-            abi: JSON.stringify(MERKLE_ROUTINE_ABI.participateRoutine),
+            abi: JSON.stringify(MERKLE_ROUTINE_ABI.createRoutine),
             params: JSON.stringify([routine_id]),
         };
         executeContract(transaction);
-    };
-
-    useEffect(() => {
-        if (result) {
+        setTimeout(() => {
             router.push('/');
             toast.custom((t) => <CustomToast toast={t} text={'미션 참여 완료했어요!'} />);
-        }
-    }, [result, router]);
+        }, 3000);
+    };
+
+    // useEffect(() => {
+    //     if (result) {
+    //         router.push('/');
+    //         toast.custom((t) => <CustomToast toast={t} text={'미션 참여 완료했어요!'} />);
+    //     }
+    // }, [result, router]);
 
     return (
         <div>
             <PageHeader canGoBack title="루틴 상세" rightIconSrc="/ic-share.svg" />
             <div className="px-6 pt-[66px] pb-[100px]">
-                <h1 className="text-white font-semibold text-4xl text-[32px] mt-3">{mockData.title}</h1>
+                <h1 className="text-white font-semibold text-4xl text-[32px] mt-3">
+                    아침 6시 30분 전<br />
+                    기상하기
+                </h1>
                 <div className="flex flex-row items-center -ml-1 mt-6">
                     <Badge text={`${mockData.week}주`} style="bg-deactiveDarker" />
                     <Badge text={mockData.category} />
@@ -67,7 +74,7 @@ const RoutineDetail: NextPageWithLayout = () => {
                 </Section>
                 <Section title={'인증 기준'} style="mt-6">
                     <ul className="list-disc ml-5 pt-2 pb-10">
-                        <li className="text-deactive text-sm text-[13px] font-medium">아침 6시 30분전 기상하기</li>
+                        <li className="text-deactive text-sm text-[13px] font-medium">아침 6시 30분 전 기상하기</li>
                         <li className="text-deactive text-sm text-[13px] font-medium">
                             타임스탬프가 노출된 사진을 등록해주세요
                         </li>

@@ -22,12 +22,12 @@ import { Routine } from '@/services/routine/types';
 
 const AddRoutine: NextPageWithLayout = () => {
     const router = useRouter();
-    const [selectedCategory, setSelectedCategory] = useState<string>(MOCK_CATEGORIES[0]);
+    const [selectedCategory, setSelectedCategory] = useState<string>(MOCK_CATEGORIES[1]);
     const [selectedCycle, setSelectedCycle] = useState<string>(MOCK_CYCLES[0]);
     const [routineTitle, updateRoutineTitle] = useInput('', 30);
     const [description, updateDescription] = useInput('', 200);
-    const [startDate, updateStartDate] = useInput('');
-    const [endDate, updateEndDate] = useInput('');
+    const [startDate, updateStartDate] = useInput('2022-11-26');
+    const [endDate, updateEndDate] = useInput('2022-11-26');
     const [deposit, updateDeposite] = useInput('', 10);
     const [result, _, executeContract] = useKlip();
     const mutation = useMutation({
@@ -42,36 +42,38 @@ const AddRoutine: NextPageWithLayout = () => {
             params: JSON.stringify([1]),
         };
         executeContract(transaction);
+        setTimeout(() => {
+            router.push('/');
+            toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
+        }, 3000);
     };
 
     const handleUpdateDeposite = (event: React.ChangeEvent<HTMLInputElement>) => {
         updateDeposite(event.target.value);
     };
 
-    useEffect(() => {
-        if (result) {
-            // mutation
-            //     .mutateAsync({
-            //         tilte: routineTitle,
-            //         startDate: '2022-11-26',
-            //         endDate: '2022-12-03',
-            //         category: selectedCategory,
-            //         term: 'EVERY_DAY',
-            //         skeleton: 1,
-            //         description,
-            //         no: 1,
-            //         fee: 1,
-            //         image1: '',
-            //         image2: '',
-            //     })
-            //     .then(() => {
-            //         router.push('/');
-            //         toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
-            //     });
-            router.push('/');
-            toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
-        }
-    }, [result, router, mutation, routineTitle, startDate, endDate, selectedCategory, description]);
+    // useEffect(() => {
+    //     if (result) {
+    //         // mutation
+    //         //     .mutateAsync({
+    //         //         tilte: routineTitle,
+    //         //         startDate: '2022-11-26',
+    //         //         endDate: '2022-12-03',
+    //         //         category: selectedCategory,
+    //         //         term: 'EVERY_DAY',
+    //         //         skeleton: 1,
+    //         //         description,
+    //         //         no: 1,
+    //         //         fee: 1,
+    //         //         image1: '',
+    //         //         image2: '',
+    //         //     })
+    //         //     .then(() => {
+    //         //         router.push('/');
+    //         //         toast.custom((t) => <CustomToast toast={t} text={'루틴이 생성되었어요!'} />);
+    //         //     });
+    //     }
+    // }, [result, router, mutation, routineTitle, startDate, endDate, selectedCategory, description]);
 
     return (
         <div>
@@ -92,14 +94,16 @@ const AddRoutine: NextPageWithLayout = () => {
                 </div>
                 <Section title={'카테고리'} style="mt-6">
                     <div className="flex flex-row items-center flex-nowrap -ml-1 scrollbar-hide overflow-auto">
-                        {MOCK_CATEGORIES.map((categoryName) => {
+                        {MOCK_CATEGORIES.map((categoryName, index) => {
                             return (
-                                <Chip
-                                    text={categoryName}
-                                    selected={selectedCategory === categoryName}
-                                    onSelect={setSelectedCategory}
-                                    key={categoryName}
-                                />
+                                index > 0 && (
+                                    <Chip
+                                        text={categoryName}
+                                        selected={selectedCategory === categoryName}
+                                        onSelect={setSelectedCategory}
+                                        key={categoryName}
+                                    />
+                                )
                             );
                         })}
                     </div>
